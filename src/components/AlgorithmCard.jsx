@@ -94,8 +94,8 @@ export default function AlgorithmCard({ caseData, isPll, isLearned, onToggle, ex
       {/* Expanded content */}
       {expanded && (
         <div style={{ animation: 'fadeIn 0.2s ease' }}>
-          {/* Setup move for PLL */}
-          {isPll && caseData.setup && (
+          {/* Setup move (OLL y PLL) */}
+          {caseData.setup && (
             <div style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '0.7rem',
