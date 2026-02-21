@@ -37,7 +37,7 @@ export default function Dashboard() {
     <div style={{ minHeight: '100vh', background: 'var(--bg-primary)' }}>
       <Header />
 
-      <main style={{ maxWidth: 1800, width: '92%', margin: '0 auto', padding: '20px 24px 40px' }}>
+      <main style={{ maxWidth: 1150, width: '94%', margin: '0 auto', padding: '24px 28px 48px' }}>
         {/* Progress section */}
         <div style={{
           background: 'var(--bg-card)',
