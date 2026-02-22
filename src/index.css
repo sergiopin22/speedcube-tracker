@@ -158,3 +158,29 @@ button {
     gap: 10px;
   }
 }
+
+/* Header responsive: desktop actions hidden on mobile */
+@media (max-width: 639px) {
+  .header-desktop-actions {
+    display: none !important;
+  }
+  .header-menu-btn {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .header-menu-btn {
+    display: none !important;
+  }
+  .header-mobile-menu {
+    display: none !important;
+  }
+  .header-email-desktop {
+    display: block !important;
+  }
+}
+
+.header-email-desktop {
+  display: none;
+}
