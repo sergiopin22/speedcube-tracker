@@ -69,7 +69,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (min-width: 1024px) and (max-width: 1999px) {
+/* Zoom solo en escritorio grande para no afectar móvil/tablet */
+@media (min-width: 1280px) and (max-width: 1999px) {
   body {
     zoom: 2;
   }
