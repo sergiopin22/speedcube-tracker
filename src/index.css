@@ -18,8 +18,40 @@
   --green-border: #1a4a2a;
   --red: #ef4444;
   --red-dark: #dc2626;
+  --blue: #3b82f6;
+  --blue-dark: #2563eb;
+  --blue-bg: #0a1628;
+  --blue-border: #1e3a5f;
+  --header-bg: rgba(12, 12, 20, 0.85);
   --font-display: 'Outfit', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+[data-theme="light"] {
+  --bg-primary: #f6f5f3;
+  --bg-secondary: #eeedeb;
+  --bg-card: #ffffff;
+  --bg-card-hover: #faf9f7;
+  --bg-input: #faf9f7;
+  --border: #e2e0dc;
+  --border-hover: #d0cec8;
+  --text-primary: #1c1b19;
+  --text-secondary: #5c5a56;
+  --text-muted: #8a8782;
+  --accent: #b8860b;
+  --accent-dark: #8b6914;
+  --accent-glow: rgba(184, 134, 11, 0.12);
+  --green: #0d9668;
+  --green-dark: #0a7550;
+  --green-bg: #e8f5f0;
+  --green-border: #a7d4c4;
+  --red: #c53030;
+  --red-dark: #9b2424;
+  --blue: #2563eb;
+  --blue-dark: #1d4ed8;
+  --blue-bg: #eff6ff;
+  --blue-border: #93c5fd;
+  --header-bg: rgba(255, 255, 255, 0.9);
 }
 
 * {
@@ -89,6 +121,11 @@ button {
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
+}
+
+@keyframes streakPop {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .fade-in {

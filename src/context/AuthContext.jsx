@@ -12,7 +12,12 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState({ oll: {}, pll: {} });
+  const [progress, setProgress] = useState({
+    oll: {},
+    pll: {},
+    ollLearning: {},
+    pllLearning: {}
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -20,7 +25,7 @@ export function AuthProvider({ children }) {
       if (firebaseUser) {
         await loadProgress(firebaseUser.uid);
       } else {
-        setProgress({ oll: {}, pll: {} });
+        setProgress({ oll: {}, pll: {}, ollLearning: {}, pllLearning: {} });
       }
       setLoading(false);
     });
@@ -35,33 +40,43 @@ export function AuthProvider({ children }) {
         const data = docSnap.data();
         setProgress({
           oll: data.oll || {},
-          pll: data.pll || {}
+          pll: data.pll || {},
+          ollLearning: data.ollLearning || {},
+          pllLearning: data.pllLearning || {}
         });
       } else {
-        await setDoc(docRef, { oll: {}, pll: {} });
-        setProgress({ oll: {}, pll: {} });
+        await setDoc(docRef, { oll: {}, pll: {}, ollLearning: {}, pllLearning: {} });
+        setProgress({ oll: {}, pll: {}, ollLearning: {}, pllLearning: {} });
       }
     } catch (error) {
       console.error('Error loading progress:', error);
-      // Fallback a localStorage
       try {
         const saved = localStorage.getItem('speedcube-progress');
-        if (saved) setProgress(JSON.parse(saved));
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setProgress({
+            oll: parsed.oll || {},
+            pll: parsed.pll || {},
+            ollLearning: parsed.ollLearning || {},
+            pllLearning: parsed.pllLearning || {}
+          });
+        }
       } catch {}
     }
   }
 
   async function saveProgress(newProgress) {
     setProgress(newProgress);
-    // Guardar en localStorage como backup
     localStorage.setItem('speedcube-progress', JSON.stringify(newProgress));
-    
+
     if (user) {
       try {
         const docRef = doc(db, 'users', user.uid);
         await updateDoc(docRef, {
           oll: newProgress.oll,
-          pll: newProgress.pll
+          pll: newProgress.pll,
+          ollLearning: newProgress.ollLearning || {},
+          pllLearning: newProgress.pllLearning || {}
         });
       } catch (error) {
         console.error('Error saving progress:', error);
@@ -70,14 +85,31 @@ export function AuthProvider({ children }) {
   }
 
   async function toggleLearned(type, id) {
+    const learningKey = type === 'oll' ? 'ollLearning' : 'pllLearning';
     const newProgress = {
       ...progress,
-      [type]: { ...progress[type] }
+      [type]: { ...progress[type] },
+      [learningKey]: { ...progress[learningKey] }
     };
     if (newProgress[type][id]) {
       delete newProgress[type][id];
     } else {
       newProgress[type][id] = true;
+      delete newProgress[learningKey][id];
+    }
+    await saveProgress(newProgress);
+  }
+
+  async function toggleLearning(type, id) {
+    const learningKey = type === 'oll' ? 'ollLearning' : 'pllLearning';
+    const newProgress = {
+      ...progress,
+      [learningKey]: { ...progress[learningKey] }
+    };
+    if (newProgress[learningKey][id]) {
+      delete newProgress[learningKey][id];
+    } else {
+      newProgress[learningKey][id] = true;
     }
     await saveProgress(newProgress);
   }
@@ -96,7 +128,8 @@ export function AuthProvider({ children }) {
     progress,
     login,
     logout,
-    toggleLearned
+    toggleLearned,
+    toggleLearning
   };
 
   return (
