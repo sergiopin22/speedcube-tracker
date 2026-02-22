@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import OLL20Logo from '../components/OLL20Logo';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -7,6 +9,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+  const { isLight } = useTheme();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -28,14 +31,18 @@ export default function LoginPage() {
 
   return (
     <div style={{
-      minHeight: '100vh',
+      position: 'fixed',
+      inset: 0,
+      height: '100vh',
+      width: '100vw',
       background: 'var(--bg-primary)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       padding: 20,
-      position: 'relative',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      boxSizing: 'border-box',
+      margin: 0
     }}>
       {/* Background decoration */}
       <div style={{
@@ -55,10 +62,15 @@ export default function LoginPage() {
         padding: '44px 36px',
         width: '100%',
         maxWidth: 400,
+        maxHeight: 'calc(100vh - 40px)',
+        overflowY: 'auto',
         textAlign: 'center',
-        position: 'relative'
+        position: 'relative',
+        boxSizing: 'border-box'
       }}>
-        <div style={{ fontSize: 56, marginBottom: 12 }}>🧊</div>
+        <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'center' }}>
+          <OLL20Logo size={56} yellow="#FFEB3B" white="#fff" cellBorder={isLight} />
+        </div>
         <h1 style={{
           fontSize: '1.8rem',
           fontWeight: 900,

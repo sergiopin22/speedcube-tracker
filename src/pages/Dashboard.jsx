@@ -186,11 +186,11 @@ export default function Dashboard() {
                   style={{
                     padding: '6px 14px',
                     borderRadius: 20,
-                    border: filter === f ? 'none' : '1px solid var(--border)',
+                    border: '1px solid #000',
                     fontSize: '0.7rem',
                     fontWeight: 700,
                     cursor: 'pointer',
-                    background: filter === f ? 'var(--accent)' : 'var(--bg-card)',
+                    background: filter === f ? '#FFEB3B' : 'var(--bg-card)',
                     color: filter === f ? '#000' : 'var(--text-secondary)',
                     transition: 'all 0.2s',
                     letterSpacing: '0.02em'

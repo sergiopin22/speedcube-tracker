@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import OLL20Logo from './OLL20Logo';
 
 export default function Header() {
   const { logout, user } = useAuth();
@@ -158,7 +159,7 @@ export default function Header() {
   return (
     <header style={headerStyle} ref={menuRef}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span style={{ fontSize: 26 }}>🧊</span>
+        <OLL20Logo size={36} yellow="#FFEB3B" white="#fff" />
         <div>
           <span style={{
             fontSize: '1.15rem',
