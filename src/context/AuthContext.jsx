@@ -1,6 +1,12 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { auth, db } from '../firebase/config';
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  onAuthStateChanged
+} from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 const AuthContext = createContext();
@@ -118,6 +124,13 @@ export function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   }
 
+  /** Inicia sesión con Google. Si el correo ya existe con email/contraseña,
+   *  Firebase lanza auth/account-exists-with-different-credential (con "One account per email" en Console). */
+  async function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  }
+
   async function logout() {
     return signOut(auth);
   }
@@ -127,6 +140,7 @@ export function AuthProvider({ children }) {
     loading,
     progress,
     login,
+    signInWithGoogle,
     logout,
     toggleLearned,
     toggleLearning
