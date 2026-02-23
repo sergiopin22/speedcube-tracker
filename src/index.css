@@ -87,6 +87,12 @@ body.app-fullscreen-view {
   zoom: 1 !important;
 }
 
+/* Timer tab activo en desktop: bloquear scroll del body */
+body.timer-active {
+  overflow: hidden;
+  height: 100vh;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -189,4 +195,95 @@ button {
 
 .header-email-desktop {
   display: none;
+}
+
+/* Timer nav: bottom on mobile, top on desktop */
+@media (max-width: 639px) {
+  .timer-nav-top {
+    display: none !important;
+  }
+  .timer-nav-bottom {
+    display: block !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .timer-nav-top {
+    display: block !important;
+  }
+  .timer-nav-bottom {
+    display: none !important;
+  }
+}
+
+/* Hide icon text on very small screens */
+@media (max-width: 360px) {
+  .timer-nav-label {
+    display: none;
+  }
+}
+
+/* Timer page layout */
+.timer-page-root {
+  min-height: 100vh;
+}
+
+.timer-main {
+  max-width: 600px;
+  padding: 16px 0 120px;
+}
+
+.timer-tab-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timer-tab-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.timer-live-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
+  text-align: center;
+}
+
+/* Desktop: fit everything in viewport, no scroll */
+@media (min-width: 640px) {
+  .timer-page-root {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timer-main {
+    max-width: 900px;
+    padding: 12px 0 16px;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timer-tab-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .timer-tab-stats {
+    width: 200px;
+    flex-shrink: 0;
+  }
+
+  .timer-live-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }

@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import OLL20Logo from './OLL20Logo';
 
-export default function Header() {
+export default function Header({ activePage, onPageChange }) {
   const { logout, user } = useAuth();
   const { theme, toggleTheme, isLight } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -102,6 +102,46 @@ export default function Header() {
   const mobileMenuBg = isLight ? '#000' : 'var(--bg-card)';
   const mobileMenuBorder = isLight ? '#222' : 'var(--border)';
 
+  const pageToggleStyle = isLight
+    ? {
+        background: 'linear-gradient(135deg, #ffd700, #ff8c00)',
+        border: 'none',
+        borderRadius: 10,
+        color: '#000',
+        padding: '7px 14px',
+        cursor: 'pointer',
+        fontSize: '0.78rem',
+        fontWeight: 700,
+        transition: 'all 0.2s',
+        letterSpacing: '0.02em'
+      }
+    : {
+        background: 'linear-gradient(135deg, var(--accent), var(--accent-dark))',
+        border: 'none',
+        borderRadius: 10,
+        color: '#000',
+        padding: '7px 14px',
+        cursor: 'pointer',
+        fontSize: '0.78rem',
+        fontWeight: 700,
+        transition: 'all 0.2s',
+        letterSpacing: '0.02em'
+      };
+
+  const renderPageToggle = (isMobile) => {
+    if (!onPageChange) return null;
+    const targetPage = activePage === 'timer' ? 'tracker' : 'timer';
+    const label = activePage === 'timer' ? 'Tracker' : 'Timer';
+    return (
+      <button
+        onClick={() => { onPageChange(targetPage); if (isMobile) setMenuOpen(false); }}
+        style={pageToggleStyle}
+      >
+        {activePage === 'timer' ? '📚' : '⏱'} {label}
+      </button>
+    );
+  };
+
   const renderThemeButton = (isMobile) => (
     <button
       onClick={() => { toggleTheme(); if (isMobile) setMenuOpen(false); }}
@@ -179,6 +219,7 @@ export default function Header() {
       </div>
 
       <div className="header-desktop-actions" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        {renderPageToggle(false)}
         {renderThemeButton(false)}
         {user && (
           <span className="header-email-desktop" style={{ fontSize: '0.7rem', color: emailColor }}>
@@ -236,6 +277,7 @@ export default function Header() {
               {user.email}
             </span>
           )}
+          {renderPageToggle(true)}
           {renderThemeButton(true)}
           {renderLogoutButton(true)}
         </div>

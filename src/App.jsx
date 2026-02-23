@@ -3,20 +3,29 @@ import { useAuth } from './context/AuthContext';
 import { useTheme } from './context/ThemeContext';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
+import TimerPage from './pages/TimerPage';
 import OLL20Logo from './components/OLL20Logo';
 import InstallPrompt from './components/InstallPrompt';
 
 const LOADING_MIN_MS = 700;
+const PAGE_KEY = 'speedcube-active-page';
 
 export default function App() {
   const { user, loading } = useAuth();
   const { isLight } = useTheme();
   const [minTimeElapsed, setMinTimeElapsed] = useState(false);
+  const [activePage, setActivePage] = useState(() => {
+    try { return localStorage.getItem(PAGE_KEY) || 'tracker'; } catch { return 'tracker'; }
+  });
 
   useEffect(() => {
     const t = setTimeout(() => setMinTimeElapsed(true), LOADING_MIN_MS);
     return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    try { localStorage.setItem(PAGE_KEY, activePage); } catch {}
+  }, [activePage]);
 
   const showLoading = loading || !minTimeElapsed;
   const isFullscreenView = showLoading || !user;
@@ -61,10 +70,15 @@ export default function App() {
     );
   }
 
-  return user ? (
+  if (!user) return <LoginPage />;
+
+  return (
     <>
-      <Dashboard />
+      {activePage === 'timer'
+        ? <TimerPage activePage={activePage} onPageChange={setActivePage} userId={user.uid} />
+        : <Dashboard activePage={activePage} onPageChange={setActivePage} />
+      }
       <InstallPrompt />
     </>
-  ) : <LoginPage />;
+  );
 }

@@ -8,7 +8,7 @@ import DrillView from '../components/DrillView';
 import ollCases from '../data/oll';
 import pllCases from '../data/pll';
 
-export default function Dashboard() {
+export default function Dashboard({ activePage, onPageChange }) {
   const { progress, toggleLearned, toggleLearning } = useAuth();
   const { isLight } = useTheme();
   const [activeTab, setActiveTab] = useState('oll');
@@ -43,7 +43,7 @@ export default function Dashboard() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-primary)' }}>
-      <Header />
+      <Header activePage={activePage} onPageChange={onPageChange} />
 
       <main style={{ maxWidth: 1150, width: '94%', margin: '0 auto', padding: '24px 28px 48px' }}>
         {/* Progress section */}
