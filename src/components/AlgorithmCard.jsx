@@ -1,7 +1,7 @@
 import CubeSVG from './CubeSVG';
 import PllSVG from './PllSVG';
 
-export default function AlgorithmCard({ caseData, isPll, isLearned, isLearning, onToggle, onToggleLearning, expanded, onExpand }) {
+export default function AlgorithmCard({ caseData, isPll, isLearned, isLearning, onToggle, onToggleLearning, expanded, onExpand, index = 0 }) {
 
   const renderSvg = () => {
     if (caseData.svg) {
@@ -42,7 +42,7 @@ export default function AlgorithmCard({ caseData, isPll, isLearned, isLearning, 
     <div
       onClick={onExpand}
       className="fade-in"
-      style={cardStyle}
+      style={{ ...cardStyle, animationDelay: `${Math.min(index * 35, 525)}ms` }}
       onMouseEnter={e => {
         e.currentTarget.style.borderColor = hoverBorder;
         e.currentTarget.style.transform = 'translateY(-2px)';

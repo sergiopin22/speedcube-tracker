@@ -106,7 +106,7 @@ export default function LoginPage() {
           fontWeight: 500
         }}>Controla tu progreso OLL & PLL</p>
 
-        <div style={{ textAlign: 'left' }}>
+        <form onSubmit={handleSubmit} style={{ textAlign: 'left' }}>
           <label style={{
             fontSize: '0.72rem',
             color: 'var(--text-secondary)',
@@ -164,37 +164,37 @@ export default function LoginPage() {
               transition: 'all 0.2s'
             }}
           />
-        </div>
 
-        {error && (
-          <p style={{
-            color: 'var(--red)',
-            fontSize: '0.82rem',
-            marginBottom: 14,
-            fontWeight: 600
-          }}>{error}</p>
-        )}
+          {error && (
+            <p style={{
+              color: 'var(--red)',
+              fontSize: '0.82rem',
+              marginBottom: 14,
+              fontWeight: 600
+            }}>{error}</p>
+          )}
 
-        <button
-          onClick={handleSubmit}
-          disabled={loading}
-          style={{
-            width: '100%',
-            padding: '14px',
-            borderRadius: 14,
-            border: 'none',
-            background: 'linear-gradient(135deg, #ffd700, #ff8c00)',
-            color: '#000',
-            fontWeight: 800,
-            fontSize: '1rem',
-            cursor: loading ? 'wait' : 'pointer',
-            letterSpacing: '0.01em',
-            transition: 'all 0.2s',
-            opacity: loading ? 0.7 : 1
-          }}
-        >
-          {loading ? 'Entrando...' : 'Iniciar sesión'}
-        </button>
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              width: '100%',
+              padding: '14px',
+              borderRadius: 14,
+              border: 'none',
+              background: 'linear-gradient(135deg, #ffd700, #ff8c00)',
+              color: '#000',
+              fontWeight: 800,
+              fontSize: '1rem',
+              cursor: loading ? 'wait' : 'pointer',
+              letterSpacing: '0.01em',
+              transition: 'all 0.2s',
+              opacity: loading ? 0.7 : 1
+            }}
+          >
+            {loading ? 'Entrando...' : 'Iniciar sesión'}
+          </button>
+        </form>
 
         <p style={{
           color: 'var(--text-muted)',

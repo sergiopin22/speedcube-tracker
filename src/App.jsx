@@ -4,6 +4,7 @@ import { useTheme } from './context/ThemeContext';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import OLL20Logo from './components/OLL20Logo';
+import InstallPrompt from './components/InstallPrompt';
 
 const LOADING_MIN_MS = 700;
 
@@ -60,5 +61,10 @@ export default function App() {
     );
   }
 
-  return user ? <Dashboard /> : <LoginPage />;
+  return user ? (
+    <>
+      <Dashboard />
+      <InstallPrompt />
+    </>
+  ) : <LoginPage />;
 }

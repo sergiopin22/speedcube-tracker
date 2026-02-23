@@ -204,7 +204,7 @@ export default function Dashboard() {
             {/* Cards Grid */}
             <div className="card-grid">
               {filteredCases.map((c, idx) => (
-                <div key={c.id} style={{ animationDelay: `${idx * 20}ms` }}>
+                <div key={c.id}>
                   <AlgorithmCard
                     caseData={c}
                     isPll={activeTab === 'pll'}
@@ -214,6 +214,7 @@ export default function Dashboard() {
                     onToggleLearning={() => toggleLearning(activeTab, c.id)}
                     expanded={expandedId === `${activeTab}-${c.id}`}
                     onExpand={() => handleToggleExpand(`${activeTab}-${c.id}`)}
+                    index={idx}
                   />
                 </div>
               ))}
